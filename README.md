@@ -1,4 +1,4 @@
-# PaperFarmDelights —— Farmer's Delight Reimplementation for PaperMC 
+# FarmersDelightRepaper —— Farmer's Delight Reimplementation for PaperMC 
 
 [中文版](README_ZH.md)
 

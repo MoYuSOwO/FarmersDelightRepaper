@@ -1,4 +1,4 @@
-# PaperFarmDelights —— 基于 Ignite 的农夫乐事复刻项目
+# FarmersDelightRepaper —— 基于 Ignite 的农夫乐事复刻项目
 
 [English](README.md)
 
