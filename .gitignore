@@ -1,8 +1,6 @@
 .idea/
 dist/
 build/
-out/
-bin/
 .gradle/
 .DS_Store
 Thumbs.db
