@@ -1,0 +1,49 @@
+// 定义全局路径
+def distDir = layout.projectDirectory.dir("dist")
+
+// 聚合构建任务（ShadowJar + 复制）
+tasks.register('buildAll') {
+    group = 'build'
+    description = '构建所有子项目并复制ShadowJar到dist目录'
+
+    // 显式依赖子项目构建任务
+    dependsOn gradle.includedBuild('plugin').task(':build')
+    dependsOn gradle.includedBuild('Ignite-mod').task(':shadowJar')
+
+    doLast {
+        // 清理旧构建产物
+        delete distDir
+
+        // 复制插件JAR
+        copy {
+            from gradle.includedBuild('plugin').projectDir.toPath().resolve("build/libs")
+            into distDir.dir("plugin").asFile
+            include "*.jar"  // ShadowJar默认后缀
+        }
+
+        // 复制Mod JAR
+        copy {
+            from gradle.includedBuild('Ignite-mod').projectDir.toPath().resolve("build/libs")
+            into distDir.dir("Ignite-mod").asFile
+            include "*.jar"
+        }
+
+        println "Build Success"
+    }
+}
+
+// 聚合清理任务
+tasks.register('cleanAll') {
+    group = 'build'
+    description = '清理所有子项目构建及dist目录'
+
+    // 触发子项目clean任务
+    dependsOn gradle.includedBuild('plugin').task(':clean')
+    dependsOn gradle.includedBuild('Ignite-mod').task(':clean')
+
+    doLast {
+        // 删除全局dist目录
+        delete distDir
+        println "已清理所有构建产物"
+    }
+}

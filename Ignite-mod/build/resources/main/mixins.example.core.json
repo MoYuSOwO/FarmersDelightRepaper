@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8.7",
+  "package": "io.github.MoYuSOwO.FarmersDelightRepaperMod.mixin.core",
+  "plugin": "io.github.MoYuSOwO.FarmersDelightRepaperMod.mixin.plugins.CorePlugin",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_21",
+  "server": [
+    "MixinCraftServer",
+    "MixinSimpleCommandMap",
+    "PinkPetalsMixin"
+  ],
+  "mixins": [
+    "MixinRandomPatchFeature",
+    "PinkPetalsMixin"
+  ]
+}

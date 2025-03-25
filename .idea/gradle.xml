@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/Ignite-mod" name="FarmersDelightRepaperMod">
+                <projects>
+                  <project path="$PROJECT_DIR$/Ignite-mod" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/Ignite-mod/build-logic" name="ignite-template-build-logic">
+                <projects>
+                  <project path="$PROJECT_DIR$/Ignite-mod/build-logic" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/plugin" name="FarmerDelightPaper">
+                <projects>
+                  <project path="$PROJECT_DIR$/plugin" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Ignite-mod" />
+            <option value="$PROJECT_DIR$/Ignite-mod/build-logic" />
+            <option value="$PROJECT_DIR$/plugin" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
