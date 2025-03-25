@@ -59,8 +59,11 @@ public final class FarmersDelightRepaperPlugin extends JavaPlugin implements Lis
                 getLogger().info("NONE");
                 return true;
             }
-            player.give(Item.getItemStack(Item.toType(args[0])));
-            return true;
+            else if (Item.isNewItem(Item.getItemStack(Item.toType(args[0])))) {
+                player.give(Item.getItemStack(Item.toType(args[0])));
+                return true;
+            }
+            return false;
         }
         return false;
     }

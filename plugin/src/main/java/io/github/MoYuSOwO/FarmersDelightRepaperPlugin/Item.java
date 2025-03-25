@@ -22,14 +22,14 @@ public class Item implements Listener {
         CABBAGE
     }
 
-    private record NewItemCustom(int modelId, String name, Material material, Integer nutrition, Float saturation, boolean canPlant) {}
+    private record NewItemCustom(int modelId, String name, Material material, Integer nutrition, Float saturation) {}
     private static final HashMap<Type, NewItemCustom> item = new HashMap<>();
 
     public Item() {
-        item.put(Type.ONION, new NewItemCustom(233001, "洋葱", Material.BEETROOT, 2, 1.6F, true));
-        item.put(Type.TOMATO, new NewItemCustom(233002, "西红柿", Material.BEETROOT, 1, 0.6F, false));
-        item.put(Type.RICE, new NewItemCustom(233003, "稻米", Material.BEETROOT_SEEDS, null, null, true));
-        item.put(Type.CABBAGE, new NewItemCustom(233004, "卷心菜", Material.BEETROOT, 2, 1.6F, false));
+        item.put(Type.ONION, new NewItemCustom(233001, "洋葱", Material.BEETROOT, 2, 1.6F));
+        item.put(Type.TOMATO, new NewItemCustom(233002, "西红柿", Material.BEETROOT, 1, 0.6F));
+        item.put(Type.RICE, new NewItemCustom(233003, "稻米", Material.BEETROOT_SEEDS, null, null));
+        item.put(Type.CABBAGE, new NewItemCustom(233004, "卷心菜", Material.BEETROOT, 2, 1.6F));
     }
 
     public static boolean isNewItem(ItemStack itemStack, Type type) {
@@ -41,6 +41,7 @@ public class Item implements Listener {
     }
 
     public static boolean isNewItem(ItemStack itemStack) {
+        if (itemStack == null) return false;
         for (Type typeValue : Type.values()) {
             if (isNewItem(itemStack, typeValue)) {
                 return true;
@@ -49,9 +50,6 @@ public class Item implements Listener {
         return false;
     }
 
-    public static boolean canPlant(Type type) {
-        return item.get(type).canPlant;
-    }
 
     public static Type getItemType(ItemStack itemStack) {
         for (Type typeValue : Type.values()) {
@@ -67,6 +65,7 @@ public class Item implements Listener {
     }
 
     public static ItemStack getItemStack(Type type) {
+        if (type == null) return null;
         ItemStack itemStack = new ItemStack(item.get(type).material);
         ItemMeta itemMeta = itemStack.getItemMeta();
         TextComponent name = Component.text(item.get(type).name).decoration(TextDecoration.ITALIC, false);
