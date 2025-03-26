@@ -13,17 +13,17 @@ import org.jetbrains.annotations.NotNull;
 
 
 public final class FarmersDelightRepaperPlugin extends JavaPlugin implements Listener {
-    public Item item;
+    public Recipes recipes;
     public Crop crop;
     public ProtocolHandler protocolHandler;
 
 
     @Override
     public void onEnable() {
-        item = new Item();
+        recipes = new Recipes();
         crop = new Crop(this);
         protocolHandler = new ProtocolHandler(this);
-        Bukkit.getPluginManager().registerEvents(item, this);
+        Bukkit.getPluginManager().registerEvents(recipes, this);
         Bukkit.getPluginManager().registerEvents(crop, this);
         Bukkit.getPluginManager().registerEvents(this, this);
     }

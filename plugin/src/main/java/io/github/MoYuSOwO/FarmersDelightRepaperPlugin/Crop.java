@@ -25,7 +25,7 @@ public class Crop implements Listener {
         this.plugin = plugin;
     }
 
-    private boolean isCrop(Block block) {
+    private static boolean isCropBlock(Block block) {
         if (block.getType() != Material.PINK_PETALS) return false;
         if (block.getBlockData() instanceof PinkPetals pinkPetals) {
             if (pinkPetals.getFacing() == BlockFace.NORTH) return false;
@@ -34,17 +34,17 @@ public class Crop implements Listener {
         return false;
     }
 
-    private Item.Type getCropType(Block block) {
+    private static Items getCropTypeOfBlock(Block block) {
         if (block.getBlockData() instanceof PinkPetals pinkPetals) {
             switch (pinkPetals.getFacing()) {
                 case SOUTH -> {
-                    return Item.Type.ONION;
+                    return Items.ONION;
                 }
                 case EAST -> {
-                    return Item.Type.TOMATO_SEED;
+                    return Items.TOMATO_SEED;
                 }
                 case WEST -> {
-                    return Item.Type.CABBAGE_SEED;
+                    return Items.CABBAGE_SEED;
                 }
                 default -> {
                     return null;
@@ -54,7 +54,7 @@ public class Crop implements Listener {
         return null;
     }
 
-    private Integer getCropStage(Block block) {
+    private static Integer getCropStageOfBlock(Block block) {
         if (block.getBlockData() instanceof PinkPetals pinkPetals) {
             return pinkPetals.getFlowerAmount();
         }
@@ -65,7 +65,7 @@ public class Crop implements Listener {
     public void onCropPlace(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             ItemStack itemInHand = event.getItem();
-            if (itemInHand != null && Item.isNewItem(event.getItem(), Item.Type.ONION)) {
+            if (itemInHand != null && Item.isNewItem(event.getItem(), Items.ONION)) {
                 Block clickedBlock = event.getClickedBlock();
                 if (clickedBlock.getType() == Material.FARMLAND && event.getBlockFace() == BlockFace.UP) {
                     Block targetBlock = event.getClickedBlock().getRelative(BlockFace.UP);
@@ -81,7 +81,7 @@ public class Crop implements Listener {
                     }
                 }
             }
-            else if (itemInHand != null && Item.isNewItem(event.getItem(), Item.Type.TOMATO_SEED)) {
+            else if (itemInHand != null && Item.isNewItem(event.getItem(), Items.TOMATO_SEED)) {
                 Block clickedBlock = event.getClickedBlock();
                 if (clickedBlock.getType() == Material.FARMLAND && event.getBlockFace() == BlockFace.UP) {
                     Block targetBlock = event.getClickedBlock().getRelative(BlockFace.UP);
@@ -103,28 +103,28 @@ public class Crop implements Listener {
 
     @EventHandler
     public void onCropBreak(BlockBreakEvent event) {
-        if (isCrop(event.getBlock())) {
-            switch (getCropType(event.getBlock())) {
+        if (isCropBlock(event.getBlock())) {
+            switch (getCropTypeOfBlock(event.getBlock())) {
                 case ONION -> {
-                    if (getCropStage(event.getBlock()) != 4) {
+                    if (getCropStageOfBlock(event.getBlock()) != 4) {
                         event.setDropItems(false);
-                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), Item.getItemStack(Item.Type.ONION));
+                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), Item.getItemStack(Items.ONION));
                         return;
                     }
-                    ItemStack onion = Item.getItemStack(Item.Type.ONION);
+                    ItemStack onion = Item.getItemStack(Items.ONION);
                     onion.add(ThreadLocalRandom.current().nextInt(2, 5));
                     event.setDropItems(false);
                     event.getPlayer().getWorld().dropItemNaturally(event.getBlock().getLocation(), onion);
                 }
                 case TOMATO_SEED -> {
-                    if (getCropStage(event.getBlock()) != 4) {
+                    if (getCropStageOfBlock(event.getBlock()) != 4) {
                         event.setDropItems(false);
-                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), Item.getItemStack(Item.Type.TOMATO_SEED));
+                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), Item.getItemStack(Items.TOMATO_SEED));
                         return;
                     }
-                    ItemStack tomato = Item.getItemStack(Item.Type.TOMATO);
+                    ItemStack tomato = Item.getItemStack(Items.TOMATO);
                     tomato.add(ThreadLocalRandom.current().nextInt(1, 3));
-                    ItemStack tomatoSeed = Item.getItemStack(Item.Type.TOMATO_SEED);
+                    ItemStack tomatoSeed = Item.getItemStack(Items.TOMATO_SEED);
                     tomatoSeed.add(ThreadLocalRandom.current().nextInt(1, 3));
                     event.setDropItems(false);
                     event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), tomato);
@@ -134,28 +134,28 @@ public class Crop implements Listener {
                 default -> {}
             }
         }
-        else if (isCrop(event.getBlock().getRelative(BlockFace.UP))) {
-            switch (getCropType(event.getBlock().getRelative(BlockFace.UP))) {
+        else if (isCropBlock(event.getBlock().getRelative(BlockFace.UP))) {
+            switch (getCropTypeOfBlock(event.getBlock().getRelative(BlockFace.UP))) {
                 case ONION -> {
-                    if (getCropStage(event.getBlock().getRelative(BlockFace.UP)) != 4) {
+                    if (getCropStageOfBlock(event.getBlock().getRelative(BlockFace.UP)) != 4) {
                         event.getBlock().getRelative(BlockFace.UP).setType(Material.AIR);
-                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), Item.getItemStack(Item.Type.ONION));
+                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), Item.getItemStack(Items.ONION));
                         return;
                     }
-                    ItemStack onion = Item.getItemStack(Item.Type.ONION);
+                    ItemStack onion = Item.getItemStack(Items.ONION);
                     onion.add(ThreadLocalRandom.current().nextInt(2, 5));
                     event.getBlock().getRelative(BlockFace.UP).setType(Material.AIR);
                     event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), onion);
                 }
                 case TOMATO_SEED -> {
-                    if (getCropStage(event.getBlock().getRelative(BlockFace.UP)) != 4) {
+                    if (getCropStageOfBlock(event.getBlock().getRelative(BlockFace.UP)) != 4) {
                         event.getBlock().getRelative(BlockFace.UP).setType(Material.AIR);
-                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), Item.getItemStack(Item.Type.TOMATO_SEED));
+                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), Item.getItemStack(Items.TOMATO_SEED));
                         return;
                     }
-                    ItemStack tomato = Item.getItemStack(Item.Type.TOMATO);
+                    ItemStack tomato = Item.getItemStack(Items.TOMATO);
                     tomato.add(ThreadLocalRandom.current().nextInt(1, 3));
-                    ItemStack tomatoSeed = Item.getItemStack(Item.Type.TOMATO_SEED);
+                    ItemStack tomatoSeed = Item.getItemStack(Items.TOMATO_SEED);
                     tomatoSeed.add(ThreadLocalRandom.current().nextInt(1, 3));
                     event.getBlock().getRelative(BlockFace.UP).setType(Material.AIR);
                     event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), tomato);
@@ -169,35 +169,35 @@ public class Crop implements Listener {
 
     @EventHandler
     public void stopFarmlandChange(BlockFadeEvent event) {
-        if (isCrop(event.getBlock().getRelative(BlockFace.UP))) event.setCancelled(true);
+        if (isCropBlock(event.getBlock().getRelative(BlockFace.UP))) event.setCancelled(true);
     }
 
     @EventHandler
     public void dropWhenFarmlandChange(EntityChangeBlockEvent event) {
-        if (!isCrop(event.getBlock().getRelative(BlockFace.UP))) return;
+        if (!isCropBlock(event.getBlock().getRelative(BlockFace.UP))) return;
         if (event.getEntityType() != EntityType.PLAYER) return;
         Block crop = event.getBlock().getRelative(BlockFace.UP);
-        switch (getCropType(crop)) {
+        switch (getCropTypeOfBlock(crop)) {
             case ONION -> {
-                if (getCropStage(crop) != 4) {
+                if (getCropStageOfBlock(crop) != 4) {
                     crop.setType(Material.AIR);
-                    crop.getWorld().dropItemNaturally(crop.getLocation(), Item.getItemStack(Item.Type.ONION));
+                    crop.getWorld().dropItemNaturally(crop.getLocation(), Item.getItemStack(Items.ONION));
                     return;
                 }
-                ItemStack onion = Item.getItemStack(Item.Type.ONION);
+                ItemStack onion = Item.getItemStack(Items.ONION);
                 onion.add(ThreadLocalRandom.current().nextInt(2, 5));
                 crop.setType(Material.AIR);
                 crop.getWorld().dropItemNaturally(crop.getLocation(), onion);
             }
             case TOMATO_SEED -> {
-                if (getCropStage(crop) != 4) {
+                if (getCropStageOfBlock(crop) != 4) {
                     crop.setType(Material.AIR);
-                    crop.getWorld().dropItemNaturally(crop.getLocation(), Item.getItemStack(Item.Type.TOMATO_SEED));
+                    crop.getWorld().dropItemNaturally(crop.getLocation(), Item.getItemStack(Items.TOMATO_SEED));
                     return;
                 }
-                ItemStack tomato = Item.getItemStack(Item.Type.TOMATO);
+                ItemStack tomato = Item.getItemStack(Items.TOMATO);
                 tomato.add(ThreadLocalRandom.current().nextInt(1, 3));
-                ItemStack tomatoSeed = Item.getItemStack(Item.Type.TOMATO_SEED);
+                ItemStack tomatoSeed = Item.getItemStack(Items.TOMATO_SEED);
                 tomatoSeed.add(ThreadLocalRandom.current().nextInt(1, 3));
                 event.getBlock().getRelative(BlockFace.UP).setType(Material.AIR);
                 event.getBlock().getWorld().dropItemNaturally(crop.getLocation(), tomato);
@@ -212,8 +212,8 @@ public class Crop implements Listener {
     public void onWaterFlow(BlockFromToEvent event) {
         Block source = event.getBlock();
         Block target = event.getToBlock();
-        Item.Type type = getCropType(target);
-        if (isCrop(target) && source.getType() == Material.WATER) {
+        Items type = getCropTypeOfBlock(target);
+        if (isCropBlock(target) && source.getType() == Material.WATER) {
             event.setCancelled(true);
             target.setType(Material.WATER);
             Levelled sourceData = (Levelled) source.getBlockData();
@@ -229,7 +229,7 @@ public class Crop implements Listener {
     public void onWaterPlaceOnCrop(PlayerBucketEmptyEvent event) {
         if (event.getBucket() != Material.WATER_BUCKET) return;
         if (event.getBlockFace() != BlockFace.UP) return;
-        if (!isCrop(event.getBlockClicked().getRelative(BlockFace.UP))) return;
+        if (!isCropBlock(event.getBlockClicked().getRelative(BlockFace.UP))) return;
         if (event.getBlockClicked().getRelative(BlockFace.UP).getRelative(BlockFace.UP).getType() == Material.AIR) {
             event.getBlockClicked().getRelative(BlockFace.UP).getRelative(BlockFace.UP).setType(Material.WATER);
         }
