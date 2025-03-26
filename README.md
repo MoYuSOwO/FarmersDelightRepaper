@@ -4,9 +4,11 @@
 
 > A Paper server mod developed using Ignite framework, aiming to recreate core features of "[Farmer's Delight](https://modrinth.com/mod/farmers-delight)" through pure server-side implementation without requiring client mods.
 
+![image](screenshot.png)
+
 ## 🌟 Features
 
-- **Zero Client Dependency**：All features implemented server-side, compatible with vanilla clients
+- **Zero Client Mod Dependency**：All features implemented server-side, compatible with vanilla clients (ResourcePack needed!)
 - **Hybrid Architecture**：Combines Paper plugin with Mixin technology
 - **Dynamic Data Storage**：Hijacks vanilla block states for crop data storage (No NBT required)
 - **Extensible Framework**：Simple implementation with high expansion potential
@@ -29,7 +31,7 @@
   ```
 
 ### Core Mechanics
-- **Onion Crop Implementation**：
+- **Crop Implementation**：
     - Stores growth stages in `BlockState`
     - Overwrites random ticks and crop logic via Mixin for native-level bone meal interaction
     - Implements physics through plugin behavior modifications
@@ -37,11 +39,12 @@
 
 ## 📌 Progress
 
-| Module      | Progress | Description                                 |
-|-------------|----------|---------------------------------------------|
-| Item System | 🚧 50%   | Partial item registration (Missing recipes) |
-| Crop System | 🚧 50%   | Basic onion growth implemented              |
-| Cooking GUI | ⭕ 0%     | Not started                                 |
+| Module      | Progress | Description                                  |
+|-------------|----------|----------------------------------------------|
+| Crop System | 🚧 75%   | onion, cabbage and tomato growth implemented |
+| Item System | 🚧 50%   | Partial item registration (Missing recipes)  |
+| Cooking GUI | ⭕ 0%     | Not started                                  |
+| Other added | ⭕ 0%     | Not started                                  |
 
 ## 🚧 Collaboration
 
