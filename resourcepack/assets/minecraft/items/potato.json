@@ -1,0 +1,13 @@
+{
+  "model":{
+    "type": "range_dispatch",
+    "property": "custom_model_data",
+    "fallback": {
+      "type": "model",
+      "model": "item/potato"
+    },
+    "entries": [
+      {"threshold": 233001,"model": {"type": "model", "model": "myfood:item/onion"}}
+    ]
+  }
+}

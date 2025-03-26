@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/wheat"
+  },
+  "overrides": [
+    { "predicate": { "custom_model_data": 233005 }, "model": "myfood:item/rice_panicle"}
+  ]
+}

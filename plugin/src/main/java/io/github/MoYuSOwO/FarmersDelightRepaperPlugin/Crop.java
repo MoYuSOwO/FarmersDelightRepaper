@@ -40,6 +40,12 @@ public class Crop implements Listener {
                 case SOUTH -> {
                     return Item.Type.ONION;
                 }
+                case EAST -> {
+                    return Item.Type.TOMATO_SEED;
+                }
+                case WEST -> {
+                    return Item.Type.CABBAGE_SEED;
+                }
                 default -> {
                     return null;
                 }
@@ -75,6 +81,22 @@ public class Crop implements Listener {
                     }
                 }
             }
+            else if (itemInHand != null && Item.isNewItem(event.getItem(), Item.Type.TOMATO_SEED)) {
+                Block clickedBlock = event.getClickedBlock();
+                if (clickedBlock.getType() == Material.FARMLAND && event.getBlockFace() == BlockFace.UP) {
+                    Block targetBlock = event.getClickedBlock().getRelative(BlockFace.UP);
+                    if (targetBlock.getType() == Material.AIR) {
+                        targetBlock.setType(Material.PINK_PETALS);
+                        if (targetBlock.getBlockData() instanceof PinkPetals pinkPetals) {
+                            pinkPetals.setFacing(BlockFace.EAST);
+                            pinkPetals.setFlowerAmount(1);
+                            targetBlock.setBlockData(pinkPetals);
+                            targetBlock.getState().update(true, true);
+                        }
+                        itemInHand.setAmount(itemInHand.getAmount() - 1);
+                    }
+                }
+            }
         }
     }
 
@@ -94,7 +116,20 @@ public class Crop implements Listener {
                     event.setDropItems(false);
                     event.getPlayer().getWorld().dropItemNaturally(event.getBlock().getLocation(), onion);
                 }
-                case RICE -> {}
+                case TOMATO_SEED -> {
+                    if (getCropStage(event.getBlock()) != 4) {
+                        event.setDropItems(false);
+                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), Item.getItemStack(Item.Type.TOMATO_SEED));
+                        return;
+                    }
+                    ItemStack tomato = Item.getItemStack(Item.Type.TOMATO);
+                    tomato.add(ThreadLocalRandom.current().nextInt(1, 3));
+                    ItemStack tomatoSeed = Item.getItemStack(Item.Type.TOMATO_SEED);
+                    tomatoSeed.add(ThreadLocalRandom.current().nextInt(1, 3));
+                    event.setDropItems(false);
+                    event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), tomato);
+                    event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), tomatoSeed);
+                }
                 case null -> {}
                 default -> {}
             }
@@ -112,7 +147,20 @@ public class Crop implements Listener {
                     event.getBlock().getRelative(BlockFace.UP).setType(Material.AIR);
                     event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), onion);
                 }
-                case RICE -> {}
+                case TOMATO_SEED -> {
+                    if (getCropStage(event.getBlock().getRelative(BlockFace.UP)) != 4) {
+                        event.getBlock().getRelative(BlockFace.UP).setType(Material.AIR);
+                        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), Item.getItemStack(Item.Type.TOMATO_SEED));
+                        return;
+                    }
+                    ItemStack tomato = Item.getItemStack(Item.Type.TOMATO);
+                    tomato.add(ThreadLocalRandom.current().nextInt(1, 3));
+                    ItemStack tomatoSeed = Item.getItemStack(Item.Type.TOMATO_SEED);
+                    tomatoSeed.add(ThreadLocalRandom.current().nextInt(1, 3));
+                    event.getBlock().getRelative(BlockFace.UP).setType(Material.AIR);
+                    event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), tomato);
+                    event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), tomatoSeed);
+                }
                 case null -> {}
                 default -> {}
             }
@@ -141,7 +189,21 @@ public class Crop implements Listener {
                 crop.setType(Material.AIR);
                 crop.getWorld().dropItemNaturally(crop.getLocation(), onion);
             }
-            case RICE -> {}
+            case TOMATO_SEED -> {
+                if (getCropStage(crop) != 4) {
+                    crop.setType(Material.AIR);
+                    crop.getWorld().dropItemNaturally(crop.getLocation(), Item.getItemStack(Item.Type.TOMATO_SEED));
+                    return;
+                }
+                ItemStack tomato = Item.getItemStack(Item.Type.TOMATO);
+                tomato.add(ThreadLocalRandom.current().nextInt(1, 3));
+                ItemStack tomatoSeed = Item.getItemStack(Item.Type.TOMATO_SEED);
+                tomatoSeed.add(ThreadLocalRandom.current().nextInt(1, 3));
+                event.getBlock().getRelative(BlockFace.UP).setType(Material.AIR);
+                event.getBlock().getWorld().dropItemNaturally(crop.getLocation(), tomato);
+                event.getBlock().getWorld().dropItemNaturally(crop.getLocation(), tomatoSeed);
+            }
+            case null -> {}
             default -> {}
         }
     }
@@ -164,7 +226,7 @@ public class Crop implements Listener {
     }
 
     @EventHandler
-    public void onBlockPlaceOnCrop(PlayerBucketEmptyEvent event) {
+    public void onWaterPlaceOnCrop(PlayerBucketEmptyEvent event) {
         if (event.getBucket() != Material.WATER_BUCKET) return;
         if (event.getBlockFace() != BlockFace.UP) return;
         if (!isCrop(event.getBlockClicked().getRelative(BlockFace.UP))) return;
