@@ -19,17 +19,32 @@ public class Item implements Listener {
         ONION,
         TOMATO,
         RICE,
-        CABBAGE
+        CABBAGE,
+        RICE_PANICLE,
+        TOMATO_SAUCE,
+        RAW_PASTA,
+        PUMPKIN_SLICE,
+        CABBAGE_LEAF,
+        TOMATO_SEED,
+        CABBAGE_SEED
     }
 
     private record NewItemCustom(int modelId, String name, Material material, Integer nutrition, Float saturation) {}
     private static final HashMap<Type, NewItemCustom> item = new HashMap<>();
 
     public Item() {
-        item.put(Type.ONION, new NewItemCustom(233001, "洋葱", Material.BEETROOT, 2, 1.6F));
+        item.put(Type.ONION, new NewItemCustom(233001, "洋葱", Material.POTATO, 2, 1.6F));
         item.put(Type.TOMATO, new NewItemCustom(233002, "西红柿", Material.BEETROOT, 1, 0.6F));
         item.put(Type.RICE, new NewItemCustom(233003, "稻米", Material.BEETROOT_SEEDS, null, null));
         item.put(Type.CABBAGE, new NewItemCustom(233004, "卷心菜", Material.BEETROOT, 2, 1.6F));
+        item.put(Type.RICE_PANICLE, new NewItemCustom(233005, "稻米穗", Material.WHEAT, null, null));
+        item.put(Type.TOMATO_SAUCE, new NewItemCustom(233006, "番茄酱", Material.MUSHROOM_STEW, 2, 3.2F));
+        item.put(Type.RAW_PASTA, new NewItemCustom(233007, "生意面", Material.TROPICAL_FISH, 3, 1.2F));
+        item.put(Type.PUMPKIN_SLICE, new NewItemCustom(233008, "南瓜片", Material.PUMPKIN_PIE, 3, 1.8F));
+        item.put(Type.CABBAGE_LEAF, new NewItemCustom(233009, "卷心菜叶", Material.BEETROOT, 1, 0.8F));
+        item.put(Type.TOMATO_SEED, new NewItemCustom(233010, "番茄种子", Material.BEETROOT_SEEDS, null, null));
+        item.put(Type.CABBAGE_SEED, new NewItemCustom(233011, "卷心菜种子", Material.BEETROOT_SEEDS, null, null));
+
     }
 
     public static boolean isNewItem(ItemStack itemStack, Type type) {
@@ -107,16 +122,30 @@ public class Item implements Listener {
             case "tomato" -> Type.TOMATO;
             case "rice" -> Type.RICE;
             case "cabbage" -> Type.CABBAGE;
+            case "cabbage_leaf" -> Type.CABBAGE_LEAF;
+            case "pumpkin_slice" -> Type.PUMPKIN_SLICE;
+            case "cabbage_seed" -> Type.CABBAGE_SEED;
+            case "tomato_sauce" -> Type.TOMATO_SAUCE;
+            case "tomato_seed" -> Type.TOMATO_SEED;
+            case "raw_pasta" -> Type.RAW_PASTA;
+            case "rice_panicle" -> Type.RICE_PANICLE;
             default -> null;
         };
     }
 
     public static String toString(Type type) {
         return switch (type) {
-            case Type.ONION -> "onion";
-            case Type.TOMATO -> "tomato";
-            case Type.RICE -> "rice";
-            case Type.CABBAGE -> "cabbage";
+            case ONION -> "onion";
+            case TOMATO -> "tomato";
+            case RICE -> "rice";
+            case CABBAGE -> "cabbage";
+            case CABBAGE_LEAF -> "cabbage_leaf";
+            case PUMPKIN_SLICE -> "pumpkin_slice";
+            case CABBAGE_SEED -> "cabbage_seed";
+            case TOMATO_SAUCE -> "tomato_sauce";
+            case TOMATO_SEED -> "tomato_seed";
+            case RAW_PASTA -> "raw_pasta";
+            case RICE_PANICLE -> "rice_panicle";
             default -> null;
         };
     }

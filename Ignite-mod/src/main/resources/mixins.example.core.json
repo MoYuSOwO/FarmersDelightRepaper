@@ -7,11 +7,12 @@
   "compatibilityLevel": "JAVA_21",
   "server": [
     "MixinCraftServer",
-    "MixinSimpleCommandMap",
-    "PinkPetalsMixin"
+    "MixinPinkPetals",
+    "MixinSimpleCommandMap"
   ],
   "mixins": [
-    "MixinRandomPatchFeature",
-    "PinkPetalsMixin"
+    "MixinBlockItem",
+    "MixinPinkPetals",
+    "MixinRandomPatchFeature"
   ]
 }

@@ -1,6 +1,6 @@
 name: FarmersDelightRepaperPlugin
 version: '0.1.0-SNAPSHOT'
-main: io.github.MoYuSOwO.farmerDelightPaper.FarmersDelightRepaperPlugin
+main: io.github.MoYuSOwO.FarmersDelightRepaperPlugin.FarmersDelightRepaperPlugin
 api-version: '1.21.4'
 authors: [ MoYuOwO ]
 description: Farmer's Delight rePaper
