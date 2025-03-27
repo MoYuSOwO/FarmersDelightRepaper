@@ -29,12 +29,11 @@
     },
     {
       "apply": {
-        "model": "minecraft:block/pink_petals_1",
-        "y": 270
+        "model": "myfood:block/cabbages_stage0"
       },
       "when": {
         "facing": "west",
-        "flower_amount": "1|2|3|4"
+        "flower_amount": "1"
       }
     },
     {
@@ -48,7 +47,7 @@
     },
     {
       "apply": {
-        "model": "myfood:block/tomatoes_stage0"
+        "model": "myfood:block/tomatoes_stage1"
       },
       "when": {
         "facing": "east",
@@ -66,12 +65,11 @@
     },
     {
       "apply": {
-        "model": "minecraft:block/pink_petals_2",
-        "y": 270
+        "model": "myfood:block/cabbages_stage1"
       },
       "when": {
         "facing": "west",
-        "flower_amount": "2|3|4"
+        "flower_amount": "2"
       }
     },
     {
@@ -104,12 +102,11 @@
     },
     {
       "apply": {
-        "model": "minecraft:block/pink_petals_3",
-        "y": 270
+        "model": "myfood:block/cabbages_stage2"
       },
       "when": {
         "facing": "west",
-        "flower_amount": "3|4"
+        "flower_amount": "3"
       }
     },
     {
@@ -141,8 +138,7 @@
     },
     {
       "apply": {
-        "model": "minecraft:block/pink_petals_4",
-        "y": 270
+        "model": "myfood:block/cabbages_stage3"
       },
       "when": {
         "facing": "west",

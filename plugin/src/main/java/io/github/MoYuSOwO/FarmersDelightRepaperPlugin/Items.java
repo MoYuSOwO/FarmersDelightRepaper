@@ -11,5 +11,7 @@ public enum Items {
     PUMPKIN_SLICE,
     CABBAGE_LEAF,
     TOMATO_SEED,
-    CABBAGE_SEED
+    CABBAGE_SEED,
+    COOKING_POT,
+    CUTTING_BLOCK
 }

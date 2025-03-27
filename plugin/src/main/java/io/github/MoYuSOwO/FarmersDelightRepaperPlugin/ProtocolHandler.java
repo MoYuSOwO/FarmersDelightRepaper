@@ -6,7 +6,11 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.wrappers.WrappedBlockData;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashSet;
 
 public class ProtocolHandler {
     private static final ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
@@ -28,13 +32,17 @@ public class ProtocolHandler {
         );
     }
 
-    private int getLeavesDistance(String s) {
-        int i = s.indexOf("distance");
-        if (i != -1) return Character.getNumericValue(s.charAt(i+9));
-        return -1;
-    }
 
     private void handleBlockChangePacket(PacketEvent event) {
-
+        HashSet<Material> coral = new HashSet<>();
+        coral.add(Material.DEAD_TUBE_CORAL);
+        coral.add(Material.DEAD_BRAIN_CORAL);
+        coral.add(Material.DEAD_BUBBLE_CORAL);
+        coral.add(Material.DEAD_FIRE_CORAL);
+        coral.add(Material.DEAD_HORN_CORAL);
+        WrappedBlockData wrappedBlockData = event.getPacket().getBlockData().read(0);
+        if (coral.contains(wrappedBlockData.getType())) {
+            plugin.getLogger().info(wrappedBlockData.toString());
+        }
     }
 }

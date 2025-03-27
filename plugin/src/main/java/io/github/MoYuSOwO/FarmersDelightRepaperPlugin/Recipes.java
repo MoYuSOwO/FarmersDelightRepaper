@@ -4,7 +4,6 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.FurnaceSmeltEvent;
-import org.bukkit.event.inventory.FurnaceStartSmeltEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -39,6 +38,18 @@ public class Recipes implements Listener {
                 }
             }
             if (!isAllWheat) {
+                event.getInventory().setResult(null);
+            }
+        }
+        else if (result == Material.CRAFTER) {
+            boolean isAllCraftingTable = true;
+            for (ItemStack item : event.getInventory().getMatrix()) {
+                if (item != null && item.getType() == Material.CRAFTING_TABLE && Item.isNewItem(item)) {
+                    isAllCraftingTable = false;
+                    break;
+                }
+            }
+            if (!isAllCraftingTable) {
                 event.getInventory().setResult(null);
             }
         }

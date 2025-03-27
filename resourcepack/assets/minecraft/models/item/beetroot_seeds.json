@@ -4,7 +4,6 @@
     "layer0": "minecraft:item/beetroot_seeds"
   },
   "overrides": [
-    { "predicate": { "custom_model_data": 233003 }, "model": "myfood:item/rice"},
     { "predicate": { "custom_model_data": 233010 }, "model": "myfood:item/tomato_seed"},
     { "predicate": { "custom_model_data": 233011 }, "model": "myfood:item/cabbage_seed"}
   ]
