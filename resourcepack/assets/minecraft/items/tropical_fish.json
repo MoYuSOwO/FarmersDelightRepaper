@@ -6,8 +6,6 @@
       "type": "minecraft:model",
       "model": "minecraft:item/tropical_fish"
     },
-    "entries": [
-      {"threshold": 233007,"model": {"type": "model", "model": "myfood:item/raw_pasta"}}
-    ]
+    "entries": []
   }
 }

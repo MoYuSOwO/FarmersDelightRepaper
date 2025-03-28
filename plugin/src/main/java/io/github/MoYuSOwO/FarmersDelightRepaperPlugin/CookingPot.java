@@ -40,8 +40,7 @@ public class CookingPot implements Listener {
     public static boolean isCookingPot(Block block) {
         if (block.getType() != Material.OAK_LEAVES) return false;
         Leaves data = (Leaves) block.getBlockData();
-        if (data.getDistance() == 3 && data.isPersistent()) return true;
-        return false;
+        return data.getDistance() == 3 && data.isPersistent();
     }
 
     @EventHandler
@@ -72,9 +71,6 @@ public class CookingPot implements Listener {
             if (event.getRawSlot() >= 0 && event.getRawSlot() <= 35 && !canPlace[event.getRawSlot()]){
                 event.setCancelled(true);
             }
-            if (canPlace[event.getRawSlot()]) {
-
-            }
         }
     }
 
@@ -93,5 +89,7 @@ public class CookingPot implements Listener {
     @EventHandler
     public void onCookingPotBreak(BlockBreakEvent event) {
         if (!isCookingPot(event.getBlock())) return;
+        event.setDropItems(false);
+        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), Item.getItemStack(Items.COOKING_POT));
     }
 }

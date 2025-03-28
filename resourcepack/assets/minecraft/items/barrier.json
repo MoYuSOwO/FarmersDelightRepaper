@@ -7,7 +7,8 @@
       "model": "item/barrier"
     },
     "entries": [
-      {"threshold": 628001,"model": {"type": "model", "model": "myfood:item/cooking_pot"}}
+      {"threshold": 628001,"model": {"type": "model", "model": "myfood:item/cooking_pot"}},
+      {"threshold": 628002,"model": {"type": "model", "model": "myfood:item/cutting_block"}}
     ]
   }
 }

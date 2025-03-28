@@ -66,5 +66,33 @@ public class Recipes implements Listener {
                 }
             }
         }
+        else if (recipe.getResult().getType() == Material.COOKED_CHICKEN) {
+            if (event.getSource().getType() == Material.CHICKEN) {
+                if (Item.isNewItem(event.getSource())) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+        else if (recipe.getResult().getType() == Material.COOKED_COD) {
+            if (event.getSource().getType() == Material.COD) {
+                if (Item.isNewItem(event.getSource())) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+        else if (recipe.getResult().getType() == Material.COOKED_PORKCHOP) {
+            if (event.getSource().getType() == Material.PORKCHOP) {
+                if (Item.isNewItem(event.getSource())) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+        else if (recipe.getResult().getType() == Material.COOKED_BEEF) {
+            if (event.getSource().getType() == Material.BEEF) {
+                if (Item.isNewItem(event.getSource())) {
+                    event.setCancelled(true);
+                }
+            }
+        }
     }
 }

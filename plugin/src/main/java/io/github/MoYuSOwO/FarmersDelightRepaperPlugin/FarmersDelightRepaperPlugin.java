@@ -22,12 +22,12 @@ public final class FarmersDelightRepaperPlugin extends JavaPlugin implements Lis
 
     @Override
     public void onEnable() {
+        Item.loadItem();
         recipes = new Recipes();
         crop = new Crop();
         protocolHandler = new ProtocolHandler(this);
         cookingPot = new CookingPot();
-        cuttingBlock = new CuttingBlock();
-        Item.loadItem();
+        cuttingBlock = new CuttingBlock(this);
         Bukkit.getPluginManager().registerEvents(recipes, this);
         Bukkit.getPluginManager().registerEvents(crop, this);
         Bukkit.getPluginManager().registerEvents(cookingPot, this);

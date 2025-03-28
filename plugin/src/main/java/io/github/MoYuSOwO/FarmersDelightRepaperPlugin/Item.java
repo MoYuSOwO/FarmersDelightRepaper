@@ -26,13 +26,19 @@ public class Item {
         item.put(Items.CABBAGE, new NewItemCustom(233004, "卷心菜", Material.BEETROOT, 2, 1.6F));
         item.put(Items.RICE_PANICLE, new NewItemCustom(233005, "稻米穗", Material.WHEAT, null, null));
         item.put(Items.TOMATO_SAUCE, new NewItemCustom(233006, "番茄酱", Material.MUSHROOM_STEW, 2, 3.2F));
-        item.put(Items.RAW_PASTA, new NewItemCustom(233007, "生意面", Material.TROPICAL_FISH, 3, 1.2F));
+        item.put(Items.RAW_PASTA, new NewItemCustom(233007, "生意面", Material.CHICKEN, 3, 1.2F));
         item.put(Items.PUMPKIN_SLICE, new NewItemCustom(233008, "南瓜片", Material.PUMPKIN_PIE, 3, 1.8F));
         item.put(Items.CABBAGE_LEAF, new NewItemCustom(233009, "卷心菜叶", Material.BEETROOT, 1, 0.8F));
         item.put(Items.TOMATO_SEED, new NewItemCustom(233010, "番茄种子", Material.BEETROOT_SEEDS, null, null));
         item.put(Items.CABBAGE_SEED, new NewItemCustom(233011, "卷心菜种子", Material.BEETROOT_SEEDS, null, null));
         item.put(Items.COOKING_POT, new NewItemCustom(233012, "厨锅", Material.CRAFTING_TABLE, null, null));
         item.put(Items.CUTTING_BLOCK, new NewItemCustom(233013, "砧板块", Material.CRAFTING_TABLE, null, null));
+        item.put(Items.RAW_CHICKEN_CUTS, new NewItemCustom(233014, "生鸡肉丁", Material.CHICKEN, 1, 0.6F));
+        item.put(Items.RAW_COD_SLICE, new NewItemCustom(233015, "生鳕鱼片", Material.COD, 1, 0.2F));
+        item.put(Items.RAW_SALMON_SLICE, new NewItemCustom(233016, "生鲑鱼片", Material.COD, 1, 0.2F));
+        item.put(Items.WHEAT_DOUGH, new NewItemCustom(233017, "面团", Material.CHICKEN, 2, 1.2F));
+        item.put(Items.RAW_BACON, new NewItemCustom(233018, "生培根", Material.PORKCHOP, 2, 1.2F));
+        item.put(Items.MINCED_BEEF, new NewItemCustom(233019, "牛肉馅", Material.BEEF, 2, 1.2F));
     }
 
     public static boolean isNewItem(ItemStack itemStack, Items type) {
@@ -99,6 +105,12 @@ public class Item {
             case "rice_panicle" -> Items.RICE_PANICLE;
             case "cooking_pot" -> Items.COOKING_POT;
             case "cutting_block" -> Items.CUTTING_BLOCK;
+            case "raw_chicken_cuts" -> Items.RAW_CHICKEN_CUTS;
+            case "raw_cod_slice" -> Items.RAW_COD_SLICE;
+            case "raw_salmon_slice" -> Items.RAW_SALMON_SLICE;
+            case "wheat_dough" -> Items.WHEAT_DOUGH;
+            case "raw_bacon" -> Items.RAW_BACON;
+            case "minced_beef" -> Items.MINCED_BEEF;
             default -> null;
         };
     }
@@ -118,7 +130,12 @@ public class Item {
             case RICE_PANICLE -> "rice_panicle";
             case COOKING_POT -> "cooking_pot";
             case CUTTING_BLOCK -> "cutting_block";
-            default -> null;
+            case RAW_CHICKEN_CUTS -> "raw_chicken_cuts";
+            case RAW_COD_SLICE -> "raw_cod_slice";
+            case RAW_SALMON_SLICE -> "raw_salmon_slice";
+            case WHEAT_DOUGH -> "wheat_dough";
+            case RAW_BACON -> "raw_bacon";
+            case MINCED_BEEF -> "minced_beef";
         };
     }
 }
