@@ -45,17 +45,20 @@ public class CuttingBlock implements Listener {
             Material.NETHERITE_SWORD
     );
     private static ArrayList<CuttingRecipe> recipes;
-    private static JavaPlugin thisPlugin;
-    private static NamespacedKey key;
     private static final int KNIFE_SLOT = 11;
     private static final int INPUT_SLOT = 20;
     private static final int[] OUTPUT_SLOT = new int[]{14, 15, 23, 24};
 
-    public CuttingBlock(JavaPlugin plugin) {
-        thisPlugin = plugin;
-        key = new NamespacedKey(thisPlugin, "preview");
+    public CuttingBlock() {
         recipes = new ArrayList<>();
-        recipes.add(new CuttingRecipe(new ItemStack(Material.BEEF), new ItemStack[]{new ItemStack(Material.BONE_MEAL), Item.getItemStack(Items.MINCED_BEEF)}));
+        recipes.add(new CuttingRecipe(new ItemStack(Material.BEEF), new ItemStack[]{new ItemStack(Material.BONE_MEAL), Item.getItemStack(Items.MINCED_BEEF, 2)}));
+        recipes.add(new CuttingRecipe(Item.getItemStack(Items.WHEAT_DOUGH), new ItemStack[]{Item.getItemStack(Items.RAW_PASTA)}));
+        recipes.add(new CuttingRecipe(new ItemStack(Material.PUMPKIN), new ItemStack[]{Item.getItemStack(Items.PUMPKIN_SLICE, 4)}));
+        recipes.add(new CuttingRecipe(Item.getItemStack(Items.CABBAGE), new ItemStack[]{Item.getItemStack(Items.CABBAGE_LEAF, 2)}));
+        recipes.add(new CuttingRecipe(new ItemStack(Material.CHICKEN), new ItemStack[]{Item.getItemStack(Items.RAW_CHICKEN_CUTS, 2), new ItemStack(Material.BONE_MEAL)}));
+        recipes.add(new CuttingRecipe(new ItemStack(Material.COD), new ItemStack[]{Item.getItemStack(Items.RAW_COD_SLICE, 2), new ItemStack(Material.BONE_MEAL)}));
+        recipes.add(new CuttingRecipe(new ItemStack(Material.SALMON), new ItemStack[]{Item.getItemStack(Items.RAW_SALMON_SLICE, 2), new ItemStack(Material.BONE_MEAL)}));
+        recipes.add(new CuttingRecipe(new ItemStack(Material.PORKCHOP), new ItemStack[]{Item.getItemStack(Items.RAW_BACON, 2), new ItemStack(Material.BONE_MEAL)}));
     }
 
     private static boolean isSameItemStack(ItemStack itemStack1, ItemStack itemStack2) {

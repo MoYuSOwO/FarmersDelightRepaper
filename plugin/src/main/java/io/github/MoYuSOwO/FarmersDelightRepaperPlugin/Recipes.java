@@ -1,16 +1,60 @@
 package io.github.MoYuSOwO.FarmersDelightRepaperPlugin;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.*;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class Recipes implements Listener {
 
-    public Recipes() {}
+    private static JavaPlugin thisPlugin;
+
+    public Recipes(JavaPlugin plugin) {
+        thisPlugin = plugin;
+        addCraftingTableRecipes();
+    }
+
+    private static void addCraftingTableRecipes() {
+        ShapelessRecipe tomatoSeed = new ShapelessRecipe(new NamespacedKey(thisPlugin, "tomatoSeed"), Item.getItemStack(Items.TOMATO_SEED));
+        tomatoSeed = tomatoSeed.addIngredient(new RecipeChoice.ExactChoice(Item.getItemStack(Items.TOMATO)));
+        Bukkit.addRecipe(tomatoSeed);
+        ShapelessRecipe rice = new ShapelessRecipe(new NamespacedKey(thisPlugin, "rice"), Item.getItemStack(Items.RICE));
+        rice = rice.addIngredient(new RecipeChoice.ExactChoice(Item.getItemStack(Items.RICE_PANICLE)));
+        Bukkit.addRecipe(rice);
+        ShapelessRecipe tomatoSauce = new ShapelessRecipe(new NamespacedKey(thisPlugin, "tomatoSauce"), Item.getItemStack(Items.TOMATO_SAUCE));
+        tomatoSauce = tomatoSauce.addIngredient(new RecipeChoice.ExactChoice(Item.getItemStack(Items.TOMATO)))
+                .addIngredient(new RecipeChoice.ExactChoice(Item.getItemStack(Items.TOMATO)))
+                .addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.BOWL)));
+        Bukkit.addRecipe(tomatoSauce);
+        ShapelessRecipe rawPasta = new ShapelessRecipe(new NamespacedKey(thisPlugin, "rawPasta"), Item.getItemStack(Items.RAW_PASTA, 2));
+        rawPasta = rawPasta.addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WATER_BUCKET)))
+                .addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WHEAT)))
+                .addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WHEAT)))
+                .addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WHEAT)))
+                .addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WHEAT)));
+        Bukkit.addRecipe(rawPasta);
+        ShapelessRecipe rawPasta1 = new ShapelessRecipe(new NamespacedKey(thisPlugin, "rawPasta1"), Item.getItemStack(Items.RAW_PASTA));
+        rawPasta1 = rawPasta1.addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WATER_BUCKET)))
+                .addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WHEAT)))
+                .addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WHEAT)));
+        Bukkit.addRecipe(rawPasta1);
+        ShapelessRecipe rawPasta2 = new ShapelessRecipe(new NamespacedKey(thisPlugin, "rawPasta2"), Item.getItemStack(Items.RAW_PASTA));
+        rawPasta2 = rawPasta2.addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.EGG)))
+                .addIngredient( new RecipeChoice.ExactChoice(new ItemStack(Material.WHEAT)))
+                .addIngredient( new RecipeChoice.ExactChoice(new ItemStack(Material.WHEAT)));
+        Bukkit.addRecipe(rawPasta2);
+        ShapelessRecipe dough = new ShapelessRecipe(new NamespacedKey(thisPlugin, "dough"), Item.getItemStack(Items.WHEAT_DOUGH, 3));
+        dough = dough.addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WATER_BUCKET)))
+                .addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WHEAT)))
+                .addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WHEAT)))
+                .addIngredient(new RecipeChoice.ExactChoice(new ItemStack(Material.WHEAT)));
+        Bukkit.addRecipe(dough);
+    }
 
     @EventHandler
     private static void checkCrafting(PrepareItemCraftEvent event) {

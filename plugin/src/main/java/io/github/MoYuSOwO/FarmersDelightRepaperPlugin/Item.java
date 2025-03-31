@@ -90,6 +90,24 @@ public class Item {
         return itemStack;
     }
 
+    public static ItemStack getItemStack(Items type, int count) {
+        if (type == null) return null;
+        ItemStack itemStack = new ItemStack(item.get(type).material);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        TextComponent name = Component.text(item.get(type).name).decoration(TextDecoration.ITALIC, false);
+        itemMeta.customName(name);
+        itemMeta.setCustomModelData(item.get(type).modelId);
+        if (item.get(type).nutrition != null && item.get(type).saturation != null) {
+            FoodComponent foodComponent = itemMeta.getFood();
+            foodComponent.setNutrition(item.get(type).nutrition);
+            foodComponent.setSaturation(item.get(type).saturation);
+            itemMeta.setFood(foodComponent);
+        }
+        itemStack.setItemMeta(itemMeta);
+        itemStack.setAmount(count);
+        return itemStack;
+    }
+
     public static Items toType(String name) {
         return switch (name) {
             case "onion" -> Items.ONION;
