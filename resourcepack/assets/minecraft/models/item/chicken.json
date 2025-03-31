@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/chicken"
+  },
+  "overrides": [
+    { "predicate": { "custom_model_data": 233007 }, "model": "myfood:item/raw_pasta"},
+    { "predicate": { "custom_model_data": 233014 }, "model": "myfood:item/chicken_cuts"},
+    { "predicate": { "custom_model_data": 233017 }, "model": "myfood:item/wheat_dough"}
+  ]
+}

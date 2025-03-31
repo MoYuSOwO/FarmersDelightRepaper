@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "range_dispatch",
+    "property": "custom_model_data",
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/cod"
+    },
+    "entries": [
+      {"threshold": 233015,"model": {"type": "model", "model": "myfood:item/cod_slice"}},
+      {"threshold": 233016,"model": {"type": "model", "model": "myfood:item/salmon_slice"}}
+    ]
+  }
+}

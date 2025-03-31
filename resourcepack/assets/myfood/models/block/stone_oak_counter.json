@@ -1,0 +1,12 @@
+{
+  "parent": "myfood:block/base_countertop",
+  "textures": {
+    "bottom_countermaterial": "myfood:block/cabinet/bottom/oak_pantry",
+    "front_countermaterial": "myfood:block/cabinet/side/oak_pantry",
+    "front_countertop": "myfood:block/counter/front/stone_counter",
+    "side_countermaterial": "myfood:block/cabinet/side/oak_pantry",
+    "side_countertop": "myfood:block/counter/side/stone_counter",
+    "top_countermaterial": "myfood:block/cabinet/top/oak_pantry",
+    "top_countertop": "myfood:block/counter/top/stone_counter"
+  }
+}

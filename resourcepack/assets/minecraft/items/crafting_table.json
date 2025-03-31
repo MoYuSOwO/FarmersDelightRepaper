@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "range_dispatch",
+    "property": "custom_model_data",
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:block/crafting_table"
+    },
+    "entries": [
+      {"threshold": 233012,"model": {"type": "model", "model": "myfood:block/cooking_pot"}},
+      {"threshold": 233013,"model": {"type": "model", "model": "myfood:block/stone_oak_counter"}}
+    ]
+  }
+}

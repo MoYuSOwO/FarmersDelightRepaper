@@ -12,6 +12,7 @@
   ],
   "mixins": [
     "MixinBlockItem",
+    "MixinLeavesBlock",
     "MixinPinkPetals",
     "MixinRandomPatchFeature"
   ]

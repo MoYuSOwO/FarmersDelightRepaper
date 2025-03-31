@@ -37,14 +37,19 @@
     - Implements physics through plugin behavior modifications
     - Achieves full visual effects with client-side resource pack support
 
-## 📌 Progress
+### Limitations
+- Hijacking the `BlockState` of Pink Flower Clusters causes naturally generated Pink Flower Clusters to only face NORTH
+- Some added crops are fewer in quantity compared to the original mod's implementation stage
+- ~~Yet to be discovered limitations~~
 
-| Module      | Progress | Description                                  |
-|-------------|----------|----------------------------------------------|
-| Crop System | 🚧 75%   | onion, cabbage and tomato growth implemented |
-| Item System | 🚧 50%   | Partial item registration (Missing recipes)  |
-| Cooking GUI | ⭕ 0%     | Not started                                  |
-| Other added | ⭕ 0%     | Not started                                  |
+## 📌 Current Progress
+
+| Module                  | Progress | Description                                                          |
+|-------------------------|----------|----------------------------------------------------------------------|
+| **Crop System**         | 🚧 75%   | Implemented planting/growth logic for onions, cabbages, and tomatoes |
+| **Item System**         | 🚧 50%   | Partial item registration completed, recipes not yet implemented     |
+| **Interactive Cooking** | ⭕ 30%    | Partially implemented GUI-based chopping board                       |
+| **New Mechanics**       | ⭕ 0%     | Development not yet started                                          |
 
 ## 🚧 Collaboration
 

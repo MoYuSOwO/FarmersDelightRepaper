@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "myfood:block/cabbages_stage1"
+  },
+  "display": {
+    "head": {
+      "scale": [2.0, 1.0, 2.0]
+    }
+  }
+}

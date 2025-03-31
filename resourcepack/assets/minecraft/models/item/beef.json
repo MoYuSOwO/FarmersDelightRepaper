@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/beef"
+  },
+  "overrides": [
+    { "predicate": { "custom_model_data": 233019 }, "model": "myfood:item/minced_beef"}
+  ]
+}
