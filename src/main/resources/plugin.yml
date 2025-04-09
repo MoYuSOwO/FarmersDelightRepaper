@@ -1,6 +1,9 @@
 name: FarmersDelightRepaper
 version: '1.0-beta'
 main: io.github.MoYuSOwO.farmersDelightRepaper.FarmersDelightRepaper
-api-version: '1.21'
+api-version: '1.21.4'
 authors: [ MoYuOwO ]
-description: NMSChunkDataHandler
+description: Farmer's Delight rePaper
+commands:
+  fd:
+    usage: /fd
