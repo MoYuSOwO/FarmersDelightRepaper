@@ -1,49 +1,64 @@
-// 定义全局路径
-def distDir = layout.projectDirectory.dir("dist")
+plugins {
+    id 'java'
+    id("xyz.jpenilla.run-paper") version "2.3.1"
+    id 'io.papermc.paperweight.userdev' version '2.0.0-beta.16'
+}
 
-// 聚合构建任务（ShadowJar + 复制）
-tasks.register('buildAll') {
-    group = 'build'
-    description = '构建所有子项目并复制ShadowJar到dist目录'
+group = 'io.github.MoYuSOwO'
+version = '1.0-beta'
 
-    // 显式依赖子项目构建任务
-    dependsOn gradle.includedBuild('plugin').task(':build')
-    dependsOn gradle.includedBuild('Ignite-mod').task(':shadowJar')
-
-    doLast {
-        // 清理旧构建产物
-        delete distDir
-
-        // 复制插件JAR
-        copy {
-            from gradle.includedBuild('plugin').projectDir.toPath().resolve("build/libs")
-            into distDir.dir("plugin").asFile
-            include "*.jar"  // ShadowJar默认后缀
-        }
-
-        // 复制Mod JAR
-        copy {
-            from gradle.includedBuild('Ignite-mod').projectDir.toPath().resolve("build/libs")
-            into distDir.dir("Ignite-mod").asFile
-            include "*.jar"
-        }
-
-        println "Build Success"
+repositories {
+    mavenCentral()
+    maven {
+        name = "papermc-repo"
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
+    maven {
+        name = "sonatype"
+        url = "https://oss.sonatype.org/content/groups/public/"
     }
 }
 
-// 聚合清理任务
-tasks.register('cleanAll') {
-    group = 'build'
-    description = '清理所有子项目构建及dist目录'
+dependencies {
+    paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
+}
 
-    // 触发子项目clean任务
-    dependsOn gradle.includedBuild('plugin').task(':clean')
-    dependsOn gradle.includedBuild('Ignite-mod').task(':clean')
+paperweight {
+    reobfJar.enabled = true
+}
 
-    doLast {
-        // 删除全局dist目录
-        delete distDir
-        println "已清理所有构建产物"
+tasks {
+    runServer {
+        // Configure the Minecraft version for our task.
+        // This is the only required configuration besides applying the plugin.
+        // Your plugin's jar (or shadowJar if present) will be used automatically.
+        minecraftVersion("1.21")
+    }
+}
+
+def targetJavaVersion = 21
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release.set(targetJavaVersion)
+    }
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
     }
 }

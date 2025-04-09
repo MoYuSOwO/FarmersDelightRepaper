@@ -1,5 +1,0 @@
-{
-  "extends": [
-    "local>vectrix-space/.github:renovate-config"
-  ]
-}

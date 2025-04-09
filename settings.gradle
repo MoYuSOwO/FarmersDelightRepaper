@@ -1,3 +1,1 @@
-includeBuild('plugin')
-includeBuild('Ignite-mod')
 rootProject.name = 'FarmersDelightRepaper'
