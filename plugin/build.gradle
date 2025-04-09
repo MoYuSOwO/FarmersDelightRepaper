@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'io.papermc.paperweight.userdev' version '2.0.0-beta.16'
 }
 
 group = 'io.github.MoYuSOwO'
@@ -25,9 +26,14 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     implementation 'org.xerial:sqlite-jdbc:3.44.1.0'
+    paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
     compileOnly 'com.comphenix.protocol:ProtocolLib:5.1.0'
+    compileOnly 'io.netty:netty-all:4.1.119.Final'
+}
+
+paperweight {
+    reobfJar.enabled = true
 }
 
 def targetJavaVersion = 21

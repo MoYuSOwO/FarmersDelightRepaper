@@ -1,15 +1,23 @@
 package io.github.MoYuSOwO.FarmersDelightRepaperPlugin;
 
+import io.netty.channel.ChannelPipeline;
+import net.minecraft.network.Connection;
+import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.PinkPetals;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+
+import java.nio.channels.Channel;
 
 
 public final class FarmersDelightRepaperPlugin extends JavaPlugin implements Listener {
@@ -28,10 +36,21 @@ public final class FarmersDelightRepaperPlugin extends JavaPlugin implements Lis
         protocolHandler = new ProtocolHandler(this);
         cookingPot = new CookingPot();
         cuttingBlock = new CuttingBlock();
+        Bukkit.getPluginManager().registerEvents(this, this);
         Bukkit.getPluginManager().registerEvents(recipes, this);
         Bukkit.getPluginManager().registerEvents(crop, this);
         Bukkit.getPluginManager().registerEvents(cookingPot, this);
         Bukkit.getPluginManager().registerEvents(cuttingBlock, this);
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        CraftPlayer craftPlayer = (CraftPlayer) player;
+        ServerPlayer serverPlayer = craftPlayer.getHandle();
+        serverPlayer.connection.connection.channel.pipeline().addBefore(
+                "packet_handler", "NMS_custom_handler", new NMSProtocolHandler(serverPlayer)
+        );
     }
 
     @Override

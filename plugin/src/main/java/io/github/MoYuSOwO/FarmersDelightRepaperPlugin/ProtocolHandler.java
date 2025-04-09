@@ -34,15 +34,5 @@ public class ProtocolHandler {
 
 
     private void handleBlockChangePacket(PacketEvent event) {
-        HashSet<Material> coral = new HashSet<>();
-        coral.add(Material.DEAD_TUBE_CORAL);
-        coral.add(Material.DEAD_BRAIN_CORAL);
-        coral.add(Material.DEAD_BUBBLE_CORAL);
-        coral.add(Material.DEAD_FIRE_CORAL);
-        coral.add(Material.DEAD_HORN_CORAL);
-        WrappedBlockData wrappedBlockData = event.getPacket().getBlockData().read(0);
-        if (coral.contains(wrappedBlockData.getType())) {
-            plugin.getLogger().info(wrappedBlockData.toString());
-        }
     }
 }
