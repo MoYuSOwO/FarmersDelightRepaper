@@ -1,77 +1,77 @@
-# FarmersDelightRepaper —— Farmer's Delight Reimplementation for PaperMC 
+# FarmersDelightRePaper - Farmers Delight Paper Edition
 
-[中文版](README_ZH.md)
+![License](https://img.shields.io/badge/License-GPLv3-blue)
+![Status](https://img.shields.io/badge/Status-Alpha-red)
 
-> A Paper server mod developed using Ignite framework, aiming to recreate core features of "[Farmer's Delight](https://modrinth.com/mod/farmers-delight)" through pure server-side implementation without requiring client mods.
+[中文](README_zh.md)
 
-![image](screenshot.png)
+A recreation project of [Farmers Delight mod](https://modrinth.com/mod/farmers-delight) based on PaperAPI and client resource packs, fully implementing original mod features through server-side technology.
 
-## 🌟 Features
+## ✨ Core Features
 
-- **Zero Client Mod Dependency**：All features implemented server-side, compatible with vanilla clients (ResourcePack needed!)
-- **Hybrid Architecture**：Combines Paper plugin with Mixin technology
-- **Dynamic Data Storage**：Hijacks vanilla block states for crop data storage (No NBT required)
-- **Extensible Framework**：Simple implementation with high expansion potential
+- **Pure Server-side Implementation**: Only requires client resource pack + Paper server plugin
+- **Protocol Layer Magic**: Uses data packets and chunk operations to trick clients into rendering custom blocks
+- **Lightweight & Dependency-free**: Natively uses chunk storage without external databases
+- **Perfect Compatibility**: Block behavior layer developed on PaperAPI without NMS dependencies
+- **Modular Architecture**: Easy to expand with new crops and cooking systems
 
-## 🛠️ Technical Implementation
+## ⚙️ Installation Guide
 
-### Development Environment
-- **Ignite + Paper**：Mixin environment built on [Ignite](https://github.com/vectrix-space/ignite)
-- **Hybrid Development**：
-  - `/plugin` - Paper plugin (Item registration/event handling)
-  - `/Ignite-mod` - Core Mixin modules
-- **Gradle Build**：
-  ```bash
-  # Full project build
-  ./gradlew build
+1. Place the plugin in `plugins/` folder
+2. Config the resource pack correctly
+3. Restart the server
+4. Ensure resource packs are enabled in `server.properties`:
+   ```properties
+   require-resource-pack=true
+   resource-pack-sha1=your_resource_pack_SHA1_value
+   ```
 
-  # Build modules separately
-  ./gradlew :plugin:build
-  ./gradlew :Ignite-mod:build
-  ```
+## 🛠️ Development Architecture
 
-### Core Mechanics
-- **Crop Implementation**：
-    - Stores growth stages in `BlockState`
-    - Overwrites random ticks and crop logic via Mixin for native-level bone meal interaction
-    - Implements physics through plugin behavior modifications
-    - Achieves full visual effects with client-side resource pack support
+### Core Modules
+| Module                  | Functionality                        |
+|-------------------------|--------------------------------------|
+| **BlockPacketHandler**  | Protocol-layer custom block disguise |
+| **CustomBlockBehavior** | Crop growth stage control            |
+| **CustomBlockStorage**  | Custom block storage                 |
 
-### Limitations
-- Hijacking the `BlockState` of Pink Flower Clusters causes naturally generated Pink Flower Clusters to only face NORTH
-- Some added crops are fewer in quantity compared to the original mod's implementation stage
-- ~~Yet to be discovered limitations~~
+## 📜 License Notice
 
-## 📌 Current Progress
+This project adopts **GNU General Public License v3.0**:
+- Allows free use and modification
+- Requires derivative works to be open source
+- Prohibits distribution as part of closed-source commercial software
 
-| Module                  | Progress | Description                                                          |
-|-------------------------|----------|----------------------------------------------------------------------|
-| **Crop System**         | 🚧 75%   | Implemented planting/growth logic for onions, cabbages, and tomatoes |
-| **Item System**         | 🚧 50%   | Partial item registration completed, recipes not yet implemented     |
-| **Interactive Cooking** | ⭕ 30%    | Partially implemented GUI-based chopping board                       |
-| **New Mechanics**       | ⭕ 0%     | Development not yet started                                          |
+Full license at [LICENSE](LICENSE).
 
-## 🚧 Collaboration
+## 🚧 Development Progress
 
-Contributions welcome! Priority areas:
+**Current Features**:
+- [x] Basic crop system (Onion)
+- [x] Block and item management
+- [x] Corresponding client resource pack
+- [x] Partial recipes
 
 **TODO List**:
-- [ ] Add multiple items and crafting recipes from original mod
-- [ ] Improve crop system mechanics
-- [ ] Implement kitchenware interactions
+- [ ] Add more items and recipes from original mod
+- [ ] Improve crop system
+- [ ] Develop knife & cooking tool interaction logic
 - [ ] ~~Find bugs~~ Write unit test cases
 
-**Guidelines**:
-1. Maintained by new developer - Mixin code may need optimization ~~(Overwrite abuse alert)~~
-2. Please run `./gradlew check` before submitting PRs
+> ⚠️ Warning: This project is still in development, do not use in production!
 
-## 📜 License
+## 🤝 Contributing
 
-Licensed under **[GNU GPLv3](LICENSE)**. You must:
-- Keep derivative works open source
-- Preserve original author attribution
-- Share modified source code
+Welcome to contribute through:
+1. Submitting Pull Requests (pass `./gradlew check` first)
+2. Discussing technical solutions in Issues
+3. Improving documentation
 
-## 💬 Contact
+Recommended development environment:
+- JDK 21+
+- Paper 1.21.4+
+- IntelliJ IDEA
 
-Submit issues or email: [MoYuOwO@outlook.com](mailto:MoYuOwO@outlook.com)
+## 💬 Communication
+
+Feel free to submit Issues or email me: [MoYuOwO@outlook.com](mailto:MoYuOwO@outlook.com)
