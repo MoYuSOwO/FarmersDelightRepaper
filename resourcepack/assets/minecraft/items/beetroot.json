@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "range_dispatch",
+    "property": "custom_model_data",
+    "fallback": {
+      "type": "model",
+      "model": "item/beetroot"
+    },
+    "entries": [
+      {"threshold": 233001,"model": {"type": "model", "model": "myfood:item/onion"}},
+      {"threshold": 233002,"model": {"type": "model", "model": "myfood:item/tomato"}},
+      {"threshold": 233004,"model": {"type": "model", "model": "myfood:item/cabbage"}},
+      {"threshold": 233009,"model": {"type": "model", "model": "myfood:item/cabbage_leaf"}}
+    ]
+  }
+}

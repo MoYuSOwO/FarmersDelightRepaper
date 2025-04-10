@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "range_dispatch",
+    "property": "custom_model_data",
+    "fallback": {
+      "type": "model",
+      "model": "item/beetroot_seeds"
+    },
+    "entries": [
+      {"threshold": 233010,"model": {"type": "model", "model": "myfood:item/tomato_seed"}},
+      {"threshold": 233011,"model": {"type": "model", "model": "myfood:item/cabbage_seed"}}
+    ]
+  }
+}
