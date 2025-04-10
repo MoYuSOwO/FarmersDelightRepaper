@@ -2,10 +2,12 @@ package io.github.MoYuSOwO.farmersDelightRepaper;
 
 import io.github.MoYuSOwO.farmersDelightRepaper.block.BlockMapping;
 import io.github.MoYuSOwO.farmersDelightRepaper.block.BlockPacketHandler;
-import io.github.MoYuSOwO.farmersDelightRepaper.item.Items;
+import io.github.MoYuSOwO.farmersDelightRepaper.block.CustomBlockBehavior;
+import io.github.MoYuSOwO.farmersDelightRepaper.item.CustomItems;
 import io.github.MoYuSOwO.farmersDelightRepaper.item.Recipes;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
@@ -19,20 +21,24 @@ import org.jetbrains.annotations.NotNull;
 
 public final class FarmersDelightRepaper extends JavaPlugin implements Listener {
 
+    public static FarmersDelightRepaper instance;
+
     @Override
     public void onEnable() {
+        instance = this;
         Bukkit.getPluginManager().registerEvents(this, this);
+        Bukkit.getPluginManager().registerEvents(new CustomBlockBehavior(), this);
         BlockMapping.init(this);
         Recipes.init(this);
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    private void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         CraftPlayer craftPlayer = (CraftPlayer) player;
         ServerPlayer serverPlayer = craftPlayer.getHandle();
         serverPlayer.connection.connection.channel.pipeline().addBefore(
-                "packet_handler", "block_packet_custom_handler", new BlockPacketHandler()
+                "packet_handler", "block_packet_custom_handler", new BlockPacketHandler(serverPlayer)
         );
     }
 
@@ -43,8 +49,9 @@ public final class FarmersDelightRepaper extends JavaPlugin implements Listener 
                 sender.sendMessage("你必须是一名玩家!");
                 return true;
             }
-            if (Items.toItems(args[0]).isPresent()) {
-                ItemStack itemStack = Items.get(Items.toItems(args[0]).get());
+            CustomItems customItems = CustomItems.toItems(args[0]);
+            if (customItems != null) {
+                ItemStack itemStack = customItems.get();
                 player.give(itemStack);
                 return true;
             }
