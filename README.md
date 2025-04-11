@@ -51,6 +51,7 @@ Full license at [LICENSE](LICENSE).
 - [x] Block and item management
 - [x] Corresponding client resource pack
 - [x] Partial recipes
+- [x] Persistent storage of custom block data based on sqlite
 
 **TODO List**:
 - [ ] Add more items and recipes from original mod
