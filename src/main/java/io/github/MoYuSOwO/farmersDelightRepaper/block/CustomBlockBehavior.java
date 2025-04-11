@@ -1,20 +1,26 @@
 package io.github.MoYuSOwO.farmersDelightRepaper.block;
 
 import io.github.MoYuSOwO.farmersDelightRepaper.item.CustomItems;
+import io.github.MoYuSOwO.farmersDelightRepaper.util.ReflectionUtil;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.craftbukkit.block.CraftBlock;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -33,7 +39,17 @@ public class CustomBlockBehavior implements Listener {
         if (event.getBlockFace() != BlockFace.UP) return;
         if (event.getClickedBlock().getRelative(BlockFace.UP).getType() != Material.AIR) return;
         event.setCancelled(true);
-        CustomBlockBehavior.place(event.getClickedBlock().getRelative(BlockFace.UP), customItems.getPlacedBlockId());
+        CustomBlockBehavior.place(event.getClickedBlock().getRelative(BlockFace.UP), customItems.getPlacedBlock());
+        event.getItem().setAmount(event.getItem().getAmount() - 1);
+    }
+
+    @EventHandler
+    private static void onCustomBlockPlace(BlockPlaceEvent event) throws Exception {
+        if (!CustomItems.isCustomItem(event.getItemInHand())) return;
+        CustomItems customItems = CustomItems.getItems(event.getItemInHand());
+        if (!customItems.canPlace()) return;
+        if (customItems.isCrop()) return;
+        CustomBlockBehavior.place(event.getBlockPlaced(), customItems.getPlacedBlock());
     }
 
     @EventHandler
@@ -47,6 +63,24 @@ public class CustomBlockBehavior implements Listener {
             event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), customBlocks.getDrop(i));
         }
         CustomBlockStorage.remove(event.getBlock());
+    }
+
+    @EventHandler
+    private static void onCustomBlockDamage(BlockDamageEvent event) {
+        CraftPlayer player = (CraftPlayer) event.getPlayer();
+        player.getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(1.0);
+        if (!CustomBlockStorage.is(event.getBlock())) return;
+        CustomBlocks customBlocks = CustomBlockStorage.get(event.getBlock());
+        if (customBlocks.canBreakImmediately()) event.setInstaBreak(true);
+        else {
+            // TODO
+//            event.setInstaBreak(false);
+//            float speed = event.getBlock().getDestroySpeed(event.getItemInHand());
+//            event.getBlock().getType().get
+//            System.out.println(speed);
+//            float ratio = (1 / (30.0F * speed)) / customBlocks.getHardness();
+//            player.getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(ratio);
+        }
     }
 
     @EventHandler
@@ -122,7 +156,7 @@ public class CustomBlockBehavior implements Listener {
         }
     }
 
-    private static void place(Block bukkitBlock, CustomBlocks target) {
+    private static void place(Block bukkitBlock, CustomBlocks target) throws Exception {
         CraftWorld craftWorld = (CraftWorld) bukkitBlock.getWorld();
         Level nmsWorld = craftWorld.getHandle();
         BlockPos pos = new BlockPos(bukkitBlock.getX(), bukkitBlock.getY(), bukkitBlock.getZ());

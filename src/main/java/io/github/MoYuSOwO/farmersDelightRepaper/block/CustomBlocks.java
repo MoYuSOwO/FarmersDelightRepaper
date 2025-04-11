@@ -14,23 +14,23 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public enum CustomBlocks {
     CUTTING_BOARD(
-            Blocks.STONE.defaultBlockState(),
+            Blocks.OAK_LEAVES.defaultBlockState(),
             Blocks.OAK_LEAVES.defaultBlockState()
-                    .setValue(BlockStateProperties.DISTANCE, 2)
-                    .setValue(BlockStateProperties.WATERLOGGED, false)
-                    .setValue(BlockStateProperties.PERSISTENT, true),
-            2.0F,
+                    .setValue(BlockStateProperties.DISTANCE, 3)
+                    .setValue(BlockStateProperties.PERSISTENT, true)
+                    .setValue(BlockStateProperties.WATERLOGGED, false),
+            2.5F,
             new BlockDrops[]{
                     new BlockDrops("CUTTING_BOARD", 1, 1)
             }
     ),
     COOKING_POT(
-            Blocks.STONE.defaultBlockState(),
+            Blocks.OAK_LEAVES.defaultBlockState(),
             Blocks.OAK_LEAVES.defaultBlockState()
-                    .setValue(BlockStateProperties.DISTANCE, 3)
-                    .setValue(BlockStateProperties.WATERLOGGED, false)
-                    .setValue(BlockStateProperties.PERSISTENT, true),
-            2.0F,
+                    .setValue(BlockStateProperties.DISTANCE, 2)
+                    .setValue(BlockStateProperties.PERSISTENT, true)
+                    .setValue(BlockStateProperties.WATERLOGGED, false),
+            2.5F,
             new BlockDrops[]{
                     new BlockDrops("COOKING_POT", 1, 1)
             }
@@ -186,6 +186,8 @@ public enum CustomBlocks {
     }
 
     public int getDropsCount() { return this.drops.length; }
+
+    public float getHardness() { return this.hardness; }
 
     public ItemStack getDrop(int index) {
         BlockDrops blockDrops = this.drops[index];

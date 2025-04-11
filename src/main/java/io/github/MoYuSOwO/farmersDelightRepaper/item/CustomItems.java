@@ -144,7 +144,7 @@ public enum CustomItems {
         return itemStack;
     }
 
-    public CustomBlocks getPlacedBlockId() {
+    public CustomBlocks getPlacedBlock() {
         return CustomBlocks.toBlocks(this.placedBlockId);
     }
 }
