@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/badge/License-GPLv3-blue)
 ![Status](https://img.shields.io/badge/Status-Alpha-red)
 
-[中文](README_zh.md)
+[中文](README_ZH.md)
 
 A recreation project of [Farmers Delight mod](https://modrinth.com/mod/farmers-delight) based on PaperAPI and client resource packs, fully implementing original mod features through server-side technology.
 
