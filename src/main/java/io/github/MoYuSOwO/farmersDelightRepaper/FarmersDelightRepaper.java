@@ -1,13 +1,10 @@
 package io.github.MoYuSOwO.farmersDelightRepaper;
 
-import io.github.MoYuSOwO.farmersDelightRepaper.block.BlockMapping;
-import io.github.MoYuSOwO.farmersDelightRepaper.block.BlockPacketHandler;
-import io.github.MoYuSOwO.farmersDelightRepaper.block.CustomBlockBehavior;
+import io.github.MoYuSOwO.farmersDelightRepaper.block.*;
 import io.github.MoYuSOwO.farmersDelightRepaper.item.CustomItems;
 import io.github.MoYuSOwO.farmersDelightRepaper.item.Recipes;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
@@ -30,6 +27,8 @@ public final class FarmersDelightRepaper extends JavaPlugin implements Listener 
         Bukkit.getPluginManager().registerEvents(new CustomBlockBehavior(), this);
         BlockMapping.init(this);
         Recipes.init(this);
+        CustomBlockDataBase.init();
+        CustomBlockStorage.loadFromDatabase();
     }
 
     @EventHandler
@@ -62,7 +61,7 @@ public final class FarmersDelightRepaper extends JavaPlugin implements Listener 
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        CustomBlockDataBase.close();
         Bukkit.resetRecipes();
     }
 }

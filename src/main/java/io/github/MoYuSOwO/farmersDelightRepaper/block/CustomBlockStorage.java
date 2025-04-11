@@ -19,11 +19,16 @@ public final class CustomBlockStorage {
 
     private CustomBlockStorage() {}
 
+    public static void loadFromDatabase() {
+        CustomBlockDataBase.loadAllBlocks(blockRecords);
+    }
+
     public static void replace(Level level, BlockPos blockPos, CustomBlocks block) {
         ChunkPos chunkPos = new ChunkPos(blockPos);
         lock.writeLock().lock();
         try {
             blockRecords.get(level).get(chunkPos).replace(blockPos, block);
+            CustomBlockDataBase.saveBlock(level.getWorld(), blockPos, block);
         } finally {
             lock.writeLock().unlock();
         }
@@ -34,6 +39,7 @@ public final class CustomBlockStorage {
         lock.writeLock().lock();
         try {
             blockRecords.computeIfAbsent(level, k -> new HashMap<>()).computeIfAbsent(chunkPos, k -> new HashMap<>()).put(blockPos, block);
+            CustomBlockDataBase.saveBlock(level.getWorld(), blockPos, block);
         } finally {
             lock.writeLock().unlock();
         }
@@ -44,6 +50,7 @@ public final class CustomBlockStorage {
         lock.writeLock().lock();
         try {
             blockRecords.get(level).get(chunkPos).remove(blockPos);
+            CustomBlockDataBase.removeBlock(level.getWorld(), blockPos);
             if (blockRecords.get(level).get(chunkPos).isEmpty()) {
                 blockRecords.get(level).remove(chunkPos);
             }
