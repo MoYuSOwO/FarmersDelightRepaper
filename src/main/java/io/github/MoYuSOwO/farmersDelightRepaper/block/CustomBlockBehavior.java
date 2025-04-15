@@ -96,7 +96,7 @@ public class CustomBlockBehavior implements Listener {
                 int progress = 0;
                 final int totalTicks = (int) (customBlocks.getHardness() * 20);
                 final Block block = event.getBlock();
-                int entityId = event.getPlayer().getEntityId();
+                final int entityId = event.getPlayer().getEntityId();
                 @Override
                 public void run() {
                     if (!damageTask.containsKey(player.getUniqueId())) {
