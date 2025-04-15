@@ -1,9 +1,12 @@
 package io.github.MoYuSOwO.farmersDelightRepaper.block;
 
+import io.github.MoYuSOwO.farmersDelightRepaper.FarmersDelightRepaper;
 import io.github.MoYuSOwO.farmersDelightRepaper.item.CustomItems;
 import io.github.MoYuSOwO.farmersDelightRepaper.util.ReflectionUtil;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
+import it.unimi.dsi.fastutil.Hash;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ClientboundBlockDestructionPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.bukkit.*;
@@ -19,14 +22,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CustomBlockBehavior implements Listener {
 
     private static final HashMap<Block, CustomBlocks> grownCrop = new HashMap<>();
+    private static final HashMap<UUID, BukkitRunnable> damageTask = new HashMap<>();
 
     @EventHandler
     private static void onCustomPlantPlace(PlayerInteractEvent event) throws Exception {
@@ -56,6 +62,7 @@ public class CustomBlockBehavior implements Listener {
     private static void onCustomBlockBreak(BlockBreakEvent event) {
         if (!CustomBlockStorage.is(event.getBlock())) return;
         if (event.isCancelled()) return;
+        if (event.getPlayer().getGameMode() == GameMode.CREATIVE) return;
         event.setCancelled(true);
         event.getBlock().setType(Material.AIR);
         CustomBlocks customBlocks = CustomBlockStorage.get(event.getBlock());
@@ -66,20 +73,63 @@ public class CustomBlockBehavior implements Listener {
     }
 
     @EventHandler
+    private static void onCustomBlockDamageAbort(BlockDamageAbortEvent event) {
+        CraftPlayer player = (CraftPlayer) event.getPlayer();
+        if (!CustomBlockStorage.is(event.getBlock())) return;
+        player.getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(1.0);
+        damageTask.remove(player.getUniqueId());
+    }
+
+    @EventHandler
     private static void onCustomBlockDamage(BlockDamageEvent event) {
         CraftPlayer player = (CraftPlayer) event.getPlayer();
-        player.getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(1.0);
         if (!CustomBlockStorage.is(event.getBlock())) return;
         CustomBlocks customBlocks = CustomBlockStorage.get(event.getBlock());
-        if (customBlocks.canBreakImmediately()) event.setInstaBreak(true);
-        else {
-            // TODO
-//            event.setInstaBreak(false);
-//            float speed = event.getBlock().getDestroySpeed(event.getItemInHand());
-//            event.getBlock().getType().get
-//            System.out.println(speed);
-//            float ratio = (1 / (30.0F * speed)) / customBlocks.getHardness();
-//            player.getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(ratio);
+        if (!customBlocks.canBreakImmediately())  {
+            player.getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(0);
+            event.setCancelled(true);
+            if (damageTask.containsKey(player.getUniqueId())) {
+                damageTask.get(player.getUniqueId()).cancel();
+                damageTask.remove(player.getUniqueId());
+            }
+            BukkitRunnable task = new BukkitRunnable() {
+                int progress = 0;
+                final int totalTicks = (int) (customBlocks.getHardness() * 20);
+                final Block block = event.getBlock();
+                int entityId = event.getPlayer().getEntityId();
+                @Override
+                public void run() {
+                    if (!damageTask.containsKey(player.getUniqueId())) {
+                        cancel();
+                        damageTask.remove(player.getUniqueId());
+                        player.getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(1.0);
+                        return;
+                    }
+                    if (progress >= totalTicks) {
+                        player.getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(1.0);
+                        block.setType(Material.AIR);
+                        CustomBlocks customBlocks = CustomBlockStorage.get(block);
+                        for (int i = 0; i < customBlocks.getDropsCount(); i++) {
+                            block.getWorld().dropItemNaturally(block.getLocation(), customBlocks.getDrop(i));
+                        }
+                        CustomBlockStorage.remove(block);
+                        player.playSound(block.getLocation(), Sound.BLOCK_STONE_BREAK, 1, 1);
+                        damageTask.remove(player.getUniqueId());
+                        cancel();
+                        return;
+                    }
+                    player.getHandle().connection.send(
+                            new ClientboundBlockDestructionPacket(
+                                    entityId,
+                                    new BlockPos(block.getX(), block.getY(), block.getZ()),
+                                    (int) ((double) progress / (double) totalTicks * 9)
+                            )
+                    );
+                    progress++;
+                }
+            };
+            task.runTaskTimer(FarmersDelightRepaper.instance, 0L, 1L);
+            damageTask.put(player.getUniqueId(), task);
         }
     }
 

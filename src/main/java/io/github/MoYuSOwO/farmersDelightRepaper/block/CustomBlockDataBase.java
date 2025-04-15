@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public final class CustomBlockDataBase {
-    private static String dbPath;
     private static Connection connection;
 
     private CustomBlockDataBase() {}
@@ -23,7 +22,7 @@ public final class CustomBlockDataBase {
         if (!FarmersDelightRepaper.instance.getDataFolder().exists()) {
             FarmersDelightRepaper.instance.getDataFolder().mkdirs();
         }
-        dbPath = FarmersDelightRepaper.instance.getDataFolder().getAbsolutePath() + "/data.db";
+        String dbPath = FarmersDelightRepaper.instance.getDataFolder().getAbsolutePath() + "/data.db";
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
             try (Statement stmt = connection.createStatement()) {
