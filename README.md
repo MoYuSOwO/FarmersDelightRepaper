@@ -1,5 +1,8 @@
 # FarmersDelightRePaper - Farmers Delight Paper Edition
 
+# Now the repositories is archived! Please go to see my NeoArtisan program!
+# 目前该项目已经归档，后续进度请参见我的NeoArtisan项目
+
 ![License](https://img.shields.io/badge/License-GPLv3-blue)
 ![Status](https://img.shields.io/badge/Status-Alpha-red)
 
